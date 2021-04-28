@@ -15,8 +15,6 @@ class HomeScreen extends StatelessWidget {
       physics: NeverScrollableScrollPhysics(),
       children: [
         HomeTab(_pageController, 1),
-        LoginScreen(),
-        CriarContaScreen(),
         Container(color: Colors.green),
       ],
     );

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:loja_virtual/model/user_model.dart';
 import 'package:loja_virtual/screens/home_screen.dart';
 import 'package:loja_virtual/screens/login_screen.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 void main() {
   runApp(MyApp());
@@ -9,15 +11,18 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Barbearia',
-      theme: ThemeData(
-        primarySwatch: Colors.amber,
-        primaryColor: Colors.amber,
-      ),
-      debugShowCheckedModeBanner: false,
-      home: Splash(),
-      //home: HomeScreen(),
+    return ScopedModel<UserModel>(
+        model: UserModel(),
+        child: MaterialApp(
+          title: 'Barbearia',
+          theme: ThemeData(
+            primarySwatch: Colors.amber,
+            primaryColor: Color(0xFF696969),//Colors.amber,
+          ),
+          debugShowCheckedModeBanner: false,
+          home: Splash(),
+          //home: HomeScreen(),
+        ),
     );
   }
 }
@@ -30,18 +35,20 @@ class Splash extends StatefulWidget {
 class _SplashState extends State<Splash> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.amber,
-      body: Center(
-        child: Container(
-          child: Image.asset(
-            "images/logo.png",
-            height: 500,
-            width: 500,
-          ),
-          //child: Icon(Icons., size: 300.0, color: Colors.amberAccent),
+    return Container(
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          stops: [0.3, 1],
+          colors: [
+            Color(0xFFCD853F),
+            Color(0xFF696969),
+          ],
         ),
       ),
+      child: Image.asset("images/logosemfundo.png", height: 800, width: 800,),
     );
   }
 
