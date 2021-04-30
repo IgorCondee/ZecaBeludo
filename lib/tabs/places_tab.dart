@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:loja_virtual/screens/home_screen.dart';
+import 'package:loja_virtual/tabs/home_tab.dart';
 import 'package:loja_virtual/tile/place_tile.dart';
 
 class PlacesTab extends StatelessWidget {
@@ -32,7 +33,7 @@ class PlacesTab extends StatelessWidget {
               child: FlatButton(
                 onPressed: (){
                   Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (context) => HomeScreen())
+                      MaterialPageRoute(builder: (context) => HomeTab())
                   );
                 },
                 child: Text(

@@ -6,9 +6,9 @@ import 'package:scoped_model/scoped_model.dart';
 
 class HomeTab extends StatelessWidget {
 
-  final PageController pageController;
+  /*final PageController pageController;
   final int page;
-  HomeTab(this.pageController, this.page);
+  HomeTab(this.pageController, this.page);*/
 
 
   @override

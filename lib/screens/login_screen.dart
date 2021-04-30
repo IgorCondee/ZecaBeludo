@@ -248,7 +248,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void _onSuccess(){
     Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => HomeScreen())
+        MaterialPageRoute(builder: (context) => HomeTab())
     );
   }
 

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+/*import 'package:flutter/material.dart';
 import 'package:loja_virtual/screens/login_screen.dart';
 import 'package:loja_virtual/tabs/home_tab.dart';
 import 'criarconta_screen.dart';
@@ -14,9 +14,10 @@ class HomeScreen extends StatelessWidget {
       controller: _pageController,
       physics: NeverScrollableScrollPhysics(),
       children: [
-        HomeTab(_pageController, 1),
+        HomeTab(),
         Container(color: Colors.green),
       ],
     );
   }
 }
+*/

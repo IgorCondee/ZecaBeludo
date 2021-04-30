@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:loja_virtual/model/user_model.dart';
 import 'package:loja_virtual/screens/home_screen.dart';
 import 'package:loja_virtual/screens/login_screen.dart';
+import 'package:loja_virtual/tabs/home_tab.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class CriarContaScreen extends StatefulWidget {
@@ -213,7 +214,7 @@ class _CriarContaScreenState extends State<CriarContaScreen> {
     );
     Future.delayed(Duration(seconds: 2)).then((_){
       Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => HomeScreen())
+          MaterialPageRoute(builder: (context) => HomeTab())
       );
       //Navigator.of(context).pop();
     });
