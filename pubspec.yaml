@@ -61,6 +61,16 @@ flutter:
     - images/logo.png
     - images/logosemfundo.png
     - images/pente.png
+    - images/lamina1.png
+    - images/espuma2.png
+    - images/barbeiro.png
+    - images/navalha.png
+    - images/perfume.png
+    - images/salao.png
+    - images/secador-de-cabelo.png
+    - images/tesouras.png
+    - images/logo3.png
+    - images/logofinal.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

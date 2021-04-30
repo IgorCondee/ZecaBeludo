@@ -37,7 +37,8 @@ class _SplashState extends State<Splash> {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.center,
-      decoration: BoxDecoration(
+      color: Colors.white,
+      /*decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
@@ -47,8 +48,8 @@ class _SplashState extends State<Splash> {
             Color(0xFF696969),
           ],
         ),
-      ),
-      child: Image.asset("images/logosemfundo.png", height: 800, width: 800,),
+      ),*/
+      child: Image.asset("images/logofinal.png", height: 800, width: 800,),
     );
   }
 

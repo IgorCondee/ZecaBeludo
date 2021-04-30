@@ -21,26 +21,29 @@ class _CriarContaScreenState extends State<CriarContaScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ScopedModelDescendant<UserModel>(
-      builder: (context, child, model){
-        if(model.isLoading)
-          return Center(child: CircularProgressIndicator(),);
+    return Scaffold(
+      key: _scaffoldKey,
+      /*appBar: AppBar(
+        title: Text("Criação de Conta"),
+        centerTitle: true,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: (){
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => LoginScreen())
+              );
+            },
+          )
+        ],
+      ),*/
+      body: ScopedModelDescendant<UserModel>(
+        builder: (context, child, model){
+          if(model.isLoading)
+            return Center(child: CircularProgressIndicator(),);
 
-        return Scaffold(
-          key: _scaffoldKey,
-          body: Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                stops: [0.05, 0.3],
-                colors: [
-                  Color(0xFFCD853F),
-                  Color(0xFFFFFFFF),
-                ],
-              ),
-            ),
-            padding: EdgeInsets.only(top: 40, right: 20, left: 20),
+          return Container(
+            padding: EdgeInsets.only(top: 20, right: 20, left: 20),
             //color: Color(0xFFFFDEAD),
             child: Form(
               key: _formKey,
@@ -49,6 +52,12 @@ class _CriarContaScreenState extends State<CriarContaScreen> {
                   Container(
                     height: 60,
                     alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      //color: Color(0xFFFFDEAD),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(5),
+                      ),
+                    ),
                     child: Text(
                       "MEUS DADOS",
                       style: TextStyle(
@@ -69,7 +78,7 @@ class _CriarContaScreenState extends State<CriarContaScreen> {
                       if(text.isEmpty) return "Nome inválido";
                     },
                   ),
-                  SizedBox(height: 25),
+                  SizedBox(height: 16),
                   TextFormField(
                     controller: _emailController,
                     decoration: InputDecoration(
@@ -80,7 +89,7 @@ class _CriarContaScreenState extends State<CriarContaScreen> {
                       if(text.isEmpty || !text.contains("@")) return "E-mail inválido";
                     },
                   ),
-                  SizedBox(height: 25),
+                  SizedBox(height: 16),
                   TextFormField(
                     controller: _telefoneController,
                     decoration: InputDecoration(
@@ -91,7 +100,7 @@ class _CriarContaScreenState extends State<CriarContaScreen> {
                       if(text.isEmpty) return "E-mail inválido";
                     },
                   ),
-                  SizedBox(height: 25),
+                  SizedBox(height: 16),
                   TextFormField(
                     controller: _pass1Controller,
                     decoration: InputDecoration(
@@ -113,93 +122,85 @@ class _CriarContaScreenState extends State<CriarContaScreen> {
                       if(text.isEmpty || text.length < 6) return "Senha inválido";
                     },
                   ),*/
+                  SizedBox(height: 16),
+                  Container(
+                    height: 60,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        stops: [0.3, 1],
+                        colors: [
+                          Color(0xFFCD853F),
+                          Color(0xFF696969),
+                        ],
+                      ),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(5),
+                      ),
+                    ),
+                    child: SizedBox.expand(
+                      child: FlatButton(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Cadastrar",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                                fontSize: 20,
+                              ),
+                              textAlign: TextAlign.left,
+                            ),
+                            Container(
+                              child: SizedBox(
+                                child: Image.asset("images/tesouras.png"),
+                                height: 28,
+                                width: 28,
+                              ),
+                            ),
+                          ],
+                        ),
+                        onPressed: (){
+                          if(_formKey.currentState.validate()){
+                            Map<String, dynamic> userData = {
+                              "name": _nomeController.text,
+                              "email": _emailController.text,
+                              "phone": _telefoneController.text,
+                            };
+
+                            model.signUp(userData: userData, pass: _pass1Controller.text, onSuccess: _onSuccess, onFail: _onFail);
+                          }
+                        },
+                      ),
+                    ),
+                  ),
+                  Container(
+                    height: 50,
+                    alignment: Alignment.center,
+                    child: FlatButton(
+                      onPressed: (){
+                        Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(builder: (context) => LoginScreen())
+                        );
+                      },
+                      child: Text(
+                        "Cancelar",
+                        textAlign: TextAlign.center,
+
+                      ),
+                      textColor: Colors.black,
+                    ),
+                  ),
                 ],
               ),
             ),
-          ),
-          bottomNavigationBar: Container(
-            padding: EdgeInsets.only(right: 20, left: 20, bottom: 50),
-            height: 200,
-            alignment: Alignment.bottomCenter,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Container(
-                  height: 60,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      stops: [0.3, 1],
-                      colors: [
-                        Color(0xFFCD853F),
-                        Color(0xFF696969),
-                      ],
-                    ),
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(5),
-                    ),
-                  ),
-                  child: SizedBox.expand(
-                    child: FlatButton(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Cadastrar",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              fontSize: 20,
-                            ),
-                            textAlign: TextAlign.left,
-                          ),
-                          Container(
-                            child: SizedBox(
-                              child: Image.asset("images/tesouras.png"),
-                              height: 28,
-                              width: 28,
-                            ),
-                          ),
-                        ],
-                      ),
-                      onPressed: (){
-                        if(_formKey.currentState.validate()){
-                          Map<String, dynamic> userData = {
-                            "name": _nomeController.text,
-                            "email": _emailController.text,
-                            "phone": _telefoneController.text,
-                          };
-
-                          model.signUp(userData: userData, pass: _pass1Controller.text, onSuccess: _onSuccess, onFail: _onFail);
-                        }
-                      },
-                    ),
-                  ),
-                ),
-                Container(
-                  height: 50,
-                  alignment: Alignment.center,
-                  child: FlatButton(
-                    onPressed: (){
-                      Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(builder: (context) => LoginScreen())
-                      );
-                    },
-                    child: Text(
-                      "Cancelar",
-                      textAlign: TextAlign.center,
-
-                    ),
-                    textColor: Colors.black,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        );
-      },
+          );
+        },
+      ),
+      bottomNavigationBar: Container(height: 100, color: Colors.red),
     );
   }
 
