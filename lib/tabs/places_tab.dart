@@ -1,14 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:loja_virtual/screens/home_screen.dart';
+import 'package:loja_virtual/data/choice_data.dart';
 import 'package:loja_virtual/tabs/home_tab.dart';
 import 'package:loja_virtual/tile/place_tile.dart';
 
 class PlacesTab extends StatelessWidget {
+  final DocumentSnapshot snapshot;
+
+  PlacesTab(this.snapshot);
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<QuerySnapshot>(
-      future: Firestore.instance.collection("places").getDocuments(),
+      //future: Firestore.instance.collection("places").getDocuments(),
+      future: Firestore.instance.collection("options").document(snapshot.documentID).collection("items").getDocuments(),
       builder: (context, snapshot){
         if(!snapshot.hasData){
           return Center(
@@ -23,9 +28,16 @@ class PlacesTab extends StatelessWidget {
             ),
             body: Container(
               color: Color(0xFFFFDEAD),
-              child: ListView(
-                children: snapshot.data.documents.map((doc) => PlaceTile(doc)).toList(),
+              child: ListView.builder(
+                //padding: EdgeInsets.all(4),
+                itemCount: snapshot.data.documents.length,
+                itemBuilder: (context, index){
+                  return PlaceTile(ChoiceData.fromDocument(snapshot.data.documents[index]));
+                },
               ),
+              /*child: ListView(
+                children: snapshot.data.documents.map((doc) => PlaceTile(doc)).toList(),
+              ),*/
             ),
             bottomNavigationBar: Container(
               height: 50,

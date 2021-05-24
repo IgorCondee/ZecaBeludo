@@ -12,6 +12,8 @@ class UserModel extends Model{  //model é o objeto que guarda os estados de alg
 
   bool isLoading = false;
 
+  static UserModel of(BuildContext context) => ScopedModel.of<UserModel>(context);
+
   @override
   void addListener(VoidCallback listener) {
     super.addListener(listener);

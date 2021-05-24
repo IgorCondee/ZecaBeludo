@@ -1,11 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:loja_virtual/data/cart.dart';
+import 'package:loja_virtual/data/choice_data.dart';
+import 'package:loja_virtual/model/choice_model.dart';
+import 'package:loja_virtual/model/user_model.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class PlaceTile extends StatelessWidget {
-  final DocumentSnapshot snapshot;
+  //final DocumentSnapshot snapshot;
+  //PlaceTile(this.snapshot);
+  final ChoiceData choice;
 
-  PlaceTile(this.snapshot);
+  PlaceTile(this.choice);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +23,14 @@ class PlaceTile extends StatelessWidget {
           FlatButton(
             padding: EdgeInsets.zero,
             onPressed: (){
-
+              /*if(UserModel.of(context).isLoggedIn()){
+                Cart cart = Cart();
+                cart.optionId = snapshot.documentID;
+                //cart.categoryId = choice.category;
+                ChoiceModel.of(context).addIten(cart);
+              }else{
+                //caso o user não esteja logado (opção entrar sem logar não implementada)
+              }*/
             },
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -25,7 +38,8 @@ class PlaceTile extends StatelessWidget {
                 SizedBox(
                   height: 200,
                   child: Image.network(
-                    snapshot.data["image"],
+                    choice.image,
+                    //snapshot.data["image"],
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -35,7 +49,8 @@ class PlaceTile extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        snapshot.data["name"],
+                        choice.name,
+                        //snapshot.data["name"],
                         textAlign: TextAlign.start,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
@@ -43,7 +58,8 @@ class PlaceTile extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        snapshot.data["address"],
+                        choice.address,
+                        //snapshot.data["address"],
                         textAlign: TextAlign.start,
                       ),
                     ],
@@ -72,7 +88,7 @@ class PlaceTile extends StatelessWidget {
             children: [
               FlatButton(
                 onPressed: (){
-                  launch("https://www.google.com/maps/search/?api=1&query=${snapshot.data["lat"]},${snapshot.data["long"]}");
+                  launch("https://www.google.com/maps/search/?api=1&query=${choice.lat},${choice.long}");
                 },
                 child: Text("Mapa"),
                 textColor: Color(0xFF696969),
@@ -80,7 +96,7 @@ class PlaceTile extends StatelessWidget {
               ),
               FlatButton(
                 onPressed: (){
-                  launch("tel:${snapshot.data["phone"]}");
+                  launch("tel:${choice.phone}");
                 },
                 child: Text("Ligar"),
                 textColor: Color(0xFF696969),
@@ -88,7 +104,6 @@ class PlaceTile extends StatelessWidget {
               ),
             ],
           ),
-
         ],
       ),
     );
