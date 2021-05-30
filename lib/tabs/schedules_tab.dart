@@ -1,38 +1,33 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:loja_virtual/data/choice_data.dart';
-import 'package:loja_virtual/tabs/home_tab.dart';
-import 'package:loja_virtual/tile/service_tile.dart';
+import 'package:loja_virtual/model/user_model.dart';
+import 'package:loja_virtual/tile/schedule_tile.dart';
 
-class ServicesTab extends StatelessWidget {
-  final DocumentSnapshot snapshot;
+import 'home_tab.dart';
 
-  ServicesTab(this.snapshot);
-
+class SchedulesTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    String uid = UserModel.of(context).firebaseUser.uid;
+    
     return FutureBuilder<QuerySnapshot>(
-      future: Firestore.instance.collection("options").document(snapshot.documentID).collection("items").getDocuments(),
+        future: Firestore.instance.collection("users").document(uid).collection("schedules").getDocuments(),
         builder: (context, snapshot){
-          if(!snapshot.hasData)
-            return Center(child: CircularProgressIndicator(),);
-          else{
+          if(!snapshot.hasData){
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }else{
             return Scaffold(
               appBar: AppBar(
-                title: Text("Serviços"),
+                title: Text("Meus Agendamentos"),
                 centerTitle: true,
                 backgroundColor: Color(0xFFCD853F),
               ),
               body: Container(
                 color: Color(0xFFFFDEAD),
-                child: ListView.builder(
-                  //padding: EdgeInsets.all(4),
-                  itemCount: snapshot.data.documents.length,
-                  itemBuilder: (context, index){
-                    ChoiceData data = ChoiceData.fromDocument(snapshot.data.documents[index]);
-                    data.category = this.snapshot.documentID;
-                    return ServiceTile(data);
-                  },
+                child: ListView(
+                  children: snapshot.data.documents.map((e) => ScheduleTile(e.documentID)).toList(),
                 ),
               ),
               bottomNavigationBar: Container(
@@ -45,7 +40,7 @@ class ServicesTab extends StatelessWidget {
                     );
                   },
                   child: Text(
-                    "Cancelar",
+                    "Voltar",
                     textAlign: TextAlign.center,
                   ),
                   textColor: Colors.black,

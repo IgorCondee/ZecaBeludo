@@ -4,6 +4,8 @@ import 'package:loja_virtual/data/cart.dart';
 import 'package:loja_virtual/data/choice_data.dart';
 import 'package:loja_virtual/model/choice_model.dart';
 import 'package:loja_virtual/model/user_model.dart';
+import 'package:loja_virtual/tabs/barber_tab.dart';
+import 'package:loja_virtual/tabs/home_tab.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class PlaceTile extends StatelessWidget {
@@ -11,7 +13,9 @@ class PlaceTile extends StatelessWidget {
   //PlaceTile(this.snapshot);
   final ChoiceData choice;
 
-  PlaceTile(this.choice);
+  String local;
+  PlaceTile(this.choice, this.local);
+
 
   @override
   Widget build(BuildContext context) {
@@ -23,14 +27,19 @@ class PlaceTile extends StatelessWidget {
           FlatButton(
             padding: EdgeInsets.zero,
             onPressed: (){
-              /*if(UserModel.of(context).isLoggedIn()){
+              if(UserModel.of(context).isLoggedIn()){
                 Cart cart = Cart();
-                cart.optionId = snapshot.documentID;
-                //cart.categoryId = choice.category;
+                cart.optionId = choice.id;
+                cart.categoryId = choice.category;
+                cart.choiceData = choice;
                 ChoiceModel.of(context).addIten(cart);
+                local = choice.category;
               }else{
                 //caso o user não esteja logado (opção entrar sem logar não implementada)
-              }*/
+              }
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => HomeTab())
+              );
             },
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,

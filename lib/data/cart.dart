@@ -12,7 +12,7 @@ class Cart{
 
   Cart.fromDocument(DocumentSnapshot document){
     cartId = document.documentID;
-    //categoryId = document.data["categoryId"];
+    categoryId = document.data["categoryId"];
     optionId = document.data["optionId"];
   }
 

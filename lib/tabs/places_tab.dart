@@ -7,7 +7,8 @@ import 'package:loja_virtual/tile/place_tile.dart';
 class PlacesTab extends StatelessWidget {
   final DocumentSnapshot snapshot;
 
-  PlacesTab(this.snapshot);
+  String local;
+  PlacesTab(this.snapshot, this.local);
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +33,9 @@ class PlacesTab extends StatelessWidget {
                 //padding: EdgeInsets.all(4),
                 itemCount: snapshot.data.documents.length,
                 itemBuilder: (context, index){
-                  return PlaceTile(ChoiceData.fromDocument(snapshot.data.documents[index]));
+                  ChoiceData data = ChoiceData.fromDocument(snapshot.data.documents[index]);
+                  data.category = this.snapshot.documentID;
+                  return PlaceTile(data, local);
                 },
               ),
               /*child: ListView(

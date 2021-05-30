@@ -35,7 +35,9 @@ class BarberTab extends StatelessWidget {
                   ),
                   itemCount: snapshot.data.documents.length,
                   itemBuilder: (context, index){
-                    return BarberTile(ChoiceData.fromDocument(snapshot.data.documents[index]));
+                    ChoiceData data = ChoiceData.fromDocument(snapshot.data.documents[index]);
+                    data.category = this.snapshot.documentID;
+                    return BarberTile(data);
                   },
                 ),
               ),

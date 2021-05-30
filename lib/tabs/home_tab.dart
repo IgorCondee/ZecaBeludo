@@ -1,9 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:loja_virtual/data/choice_data.dart';
 import 'package:loja_virtual/model/choice_model.dart';
 import 'package:loja_virtual/model/user_model.dart';
 import 'package:loja_virtual/screens/login_screen.dart';
+import 'package:loja_virtual/screens/schedules_screen.dart';
 import 'package:loja_virtual/tabs/places_tab.dart';
+import 'package:loja_virtual/tabs/schedules_tab.dart';
 import 'package:loja_virtual/tile/category_tile.dart';
 import 'package:scoped_model/scoped_model.dart';
 
@@ -36,22 +39,6 @@ class HomeTab extends StatelessWidget {
                 return ScopedModel<ChoiceModel>(
                   model: ChoiceModel(model),
                   child: Scaffold(
-                    /*appBar: AppBar(
-                      title: Text("Agendamento de Serviços"),
-                      centerTitle: true,
-                      backgroundColor: Color(0xFFCD853F),
-                      actions: [
-                        IconButton(
-                          icon: Icon(Icons.exit_to_app),
-                          onPressed: (){
-                            model.signOut();
-                            Navigator.of(context).pushReplacement(
-                                MaterialPageRoute(builder: (context) => LoginScreen())
-                            );
-                          },
-                        )
-                      ],
-                    ),*/
                     body: Container(
                       color: Color(0xFFFFDEAD),
                       child: ListView(
@@ -91,8 +78,33 @@ class HomeTab extends StatelessWidget {
                           SizedBox(height: 40),
                           Column(
                             children: snapshot.data.documents.map((doc) => CategoryTile(doc)).toList(),
-                          )
-                          /*Container(
+                          ),
+                          SizedBox(height: 5),
+                          Container(
+                            height: 40,
+                            alignment: Alignment.centerRight,
+                            child: FlatButton(
+                              child: Text(
+                                "Limpar todas as seleções",
+                                textAlign: TextAlign.right,
+                              ),
+                              onPressed: (){
+                                ChoiceModel.of(context).deleteAll();
+                                /*Scaffold.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text("Seleções limpas!"),
+                                    backgroundColor: Colors.redAccent,
+                                    duration: Duration(seconds: 2),
+                                  )
+                                );*/
+                                Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(builder: (context) => HomeTab())
+                                );
+                              },
+                            ),
+                          ),
+                          SizedBox(height: 16),
+                          Container(
                             padding: EdgeInsets.only(right: 20, left: 20),
                             decoration: BoxDecoration(
                               gradient: LinearGradient(
@@ -120,7 +132,7 @@ class HomeTab extends StatelessWidget {
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        "Unidade",
+                                        "Meus Agendamentos",
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           color: Color(0xFF696969),
@@ -130,7 +142,7 @@ class HomeTab extends StatelessWidget {
                                       ),
                                       Container(
                                         child: SizedBox(
-                                          child: Image.asset("images/tesouras.png"),
+                                          child: Image.asset("images/secador-de-cabelo.png"),
                                           height: 28,
                                           width: 28,
                                         ),
@@ -138,173 +150,90 @@ class HomeTab extends StatelessWidget {
                                     ],
                                   ),
                                   onPressed: (){
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(builder: (context) => PlacesTab())
+                                    Navigator.of(context).pushReplacement(
+                                        MaterialPageRoute(builder: (context) => SchedulesTab())
                                     );
                                   },
                                 ),
                               ),
                             ),
                           ),
-                          SizedBox(height: 16),
-                          Container(
-                            padding: EdgeInsets.only(right: 20, left: 20),
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                begin: Alignment.centerLeft,
-                                end: Alignment.centerRight,
-                                stops: [0.5, 0.5],
-                                colors: [
-                                  Color(0xFFCD853F),
-                                  Color(0xFF696969),
-                                ],
-                              ),
-                            ),
-                            child: Container(
-                              height: 80,
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(5),
-                                ),
-                              ),
-                              child: SizedBox.expand(
-                                child: FlatButton(
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        "Serviço",
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Color(0xFF696969),
-                                          fontSize: 20,
-                                        ),
-                                        textAlign: TextAlign.left,
-                                      ),
-                                      Container(
-                                        child: SizedBox(
-                                          child: Image.asset("images/tesouras.png"),
-                                          height: 28,
-                                          width: 28,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  onPressed: (){
-                                  },
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 16),
-                          Container(
-                            padding: EdgeInsets.only(right: 20, left: 20),
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                begin: Alignment.centerLeft,
-                                end: Alignment.centerRight,
-                                stops: [0.5, 0.5],
-                                colors: [
-                                  Color(0xFFCD853F),
-                                  Color(0xFF696969),
-                                ],
-                              ),
-                            ),
-                            child: Container(
-                              height: 80,
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(5),
-                                ),
-                              ),
-                              child: SizedBox.expand(
-                                child: FlatButton(
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        "Barbeiro",
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Color(0xFF696969),
-                                          fontSize: 20,
-                                        ),
-                                        textAlign: TextAlign.left,
-                                      ),
-                                      Container(
-                                        child: SizedBox(
-                                          child: Image.asset("images/tesouras.png"),
-                                          height: 28,
-                                          width: 28,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  onPressed: (){
-                                  },
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 16),
-                          Container(
-                            padding: EdgeInsets.only(right: 20, left: 20),
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                begin: Alignment.centerLeft,
-                                end: Alignment.centerRight,
-                                stops: [0.5, 0.5],
-                                colors: [
-                                  Color(0xFFCD853F),
-                                  Color(0xFF696969),
-                                ],
-                              ),
-                            ),
-                            child: Container(
-                              height: 80,
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(5),
-                                ),
-                              ),
-                              child: SizedBox.expand(
-                                child: FlatButton(
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        "Data e Hora",
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Color(0xFF696969),
-                                          fontSize: 20,
-                                        ),
-                                        textAlign: TextAlign.left,
-                                      ),
-                                      Container(
-                                        child: SizedBox(
-                                          child: Image.asset("images/tesouras.png"),
-                                          height: 28,
-                                          width: 28,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  onPressed: (){
-                                  },
-                                ),
-                              ),
-                            ),
-                          ),*/
+                          SizedBox(height: 40),
                         ],
                       ),
                     ),
+                    bottomNavigationBar: ScopedModelDescendant<ChoiceModel>(
+                        builder: (context, child, model){
+                          int p = model.choices.length;
+                          return Container(
+                            //padding: EdgeInsets.only(top: 60, right: 20, left: 20),
+                            height: 60,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                                stops: [0.3, 1],
+                                colors: [
+                                  Color(0xFFCD853F),
+                                  Color(0xFF696969),
+                                ],
+                              ),
+                            ),
+                            child: SizedBox.expand(
+                              child: FlatButton(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      "Finalizar Agendamento ${p.toString()}",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                        fontSize: 20,
+                                      ),
+                                      textAlign: TextAlign.left,
+                                    ),
+                                    Container(
+                                      child: SizedBox(
+                                        child: Image.asset("images/perfume.png"),
+                                        height: 28,
+                                        width: 28,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                onPressed: (){
+                                  if(p == 4){
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(builder: (context) => SchedulesScreen())
+                                    );
+                                  }else if(p < 4){
+                                    Scaffold.of(context).showSnackBar(
+                                        SnackBar(
+                                          content: Text("Favor selecionar todos os itens!"),
+                                          backgroundColor: Colors.redAccent,
+                                          duration: Duration(seconds: 2),
+                                        )
+                                    );
+                                  }else if(p > 4){
+                                    Scaffold.of(context).showSnackBar(
+                                        SnackBar(
+                                          content: Text("Erro"),
+                                          backgroundColor: Colors.redAccent,
+                                          duration: Duration(seconds: 2),
+                                        )
+                                    );
+                                  };
+                                  /*Navigator.of(context).push(
+                                      MaterialPageRoute(builder: (context) => SchedulesScreen())
+                                  );*/
+                                },
+                              ),
+                            ),
+                          );
+                        }
+                    )
                   ),
                 );
               }

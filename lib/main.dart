@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loja_virtual/model/choice_model.dart';
 import 'package:loja_virtual/model/user_model.dart';
 import 'package:loja_virtual/screens/home_screen.dart';
 import 'package:loja_virtual/screens/login_screen.dart';
@@ -13,15 +14,22 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScopedModel<UserModel>(
         model: UserModel(),
-        child: MaterialApp(
-          title: 'Barbearia',
-          theme: ThemeData(
-            primarySwatch: Colors.amber,
-            primaryColor: Color(0xFF696969),//Colors.amber,
-          ),
-          debugShowCheckedModeBanner: false,
-          home: Splash(),
-          //home: HomeScreen(),
+        child: ScopedModelDescendant<UserModel>(
+          builder: (context, child, model){
+            return ScopedModel<ChoiceModel>(
+                model: ChoiceModel(model),
+                child: MaterialApp(
+                  title: 'Barbearia',
+                  theme: ThemeData(
+                    primarySwatch: Colors.brown,
+                    primaryColor: Color(0xFF696969),//Colors.amber,
+                  ),
+                  debugShowCheckedModeBanner: false,
+                  home: Splash(),
+                  //home: HomeScreen(),
+                ),
+            );
+          },
         ),
     );
   }
